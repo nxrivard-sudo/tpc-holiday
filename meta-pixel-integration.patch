@@ -1,0 +1,77 @@
+--- a/index.html
++++ b/index.html
+@@ -7,7 +7,8 @@
+   gtag('js', new Date());
+   gtag('config', 'AW-10933789586', {allow_enhanced_conversions: false});
+ </script>
+-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Holiday Parties | The Picnic Collective</title></head><body>
++<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Holiday Parties | The Picnic Collective</title><script src="meta-pixel.js?v=meta-draft-1" defer></script>
++</head><body>
+ <style>body{font-family:Georgia,serif;background:#f7f1e8;color:#2b2b2b;text-align:center;margin:0;padding:96px 20px}a{display:inline-block;margin:10px;padding:16px 26px;background:#C8263A;color:#fff;text-decoration:none;border-radius:6px;font-size:18px}</style>
+ <h1>Holiday parties, handled.</h1><p>The Picnic Collective · Southern California</p>
+ <a href="holiday-at-home/">Holiday at home</a><a href="holiday-parties/">Company parties</a><a href="gift/">Gift a Picnic</a>
+--- a/gift/index.html
++++ b/gift/index.html
+@@ -24,6 +24,7 @@
+ @media(max-width:760px){.hero,.cards{grid-template-columns:1fr}.hero{padding-block:32px}.hero img{height:300px}section{padding-block:36px}}
+ </style>
+ <script src="../tracking.js?v=ads-consult-1" defer></script>
++<script src="../meta-pixel.js?v=meta-draft-1" defer></script>
+ </head>
+ <body>
+ <nav class="nav" aria-label="Main"><div class="wrap"><a href="../">The Picnic Collective</a><a href="../holiday-at-home/">Explore holiday experiences →</a></div></nav>
+--- a/go/index.html
++++ b/go/index.html
+@@ -8,7 +8,8 @@
+   gtag('config', 'AW-10933789586', {allow_enhanced_conversions: false});
+ </script>
+ <meta charset="utf-8"><meta name="robots" content="noindex">
+-<meta name="viewport" content="width=device-width,initial-scale=1"><title>The Picnic Collective</title></head>
++<meta name="viewport" content="width=device-width,initial-scale=1"><title>The Picnic Collective</title><script src="../meta-pixel.js?v=meta-draft-1" defer></script>
++</head>
+ <body style="font-family:Georgia,serif;text-align:center;padding:60px 20px;color:#333">
+ <p>One moment…</p>
+ <script src="../tracking.js?v=ads-consult-1"></script>
+--- a/holiday-at-home/index.html
++++ b/holiday-at-home/index.html
+@@ -7,7 +7,8 @@
+   gtag('js', new Date());
+   gtag('config', 'AW-10933789586', {allow_enhanced_conversions: false});
+ </script>
+-<meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
++<meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><script src="../meta-pixel.js?v=meta-draft-1" defer></script>
++</head><body>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Holiday Parties at Home in SoCal: Catering, Carts and Kids Parties</title>
+--- a/holiday-parties/index.html
++++ b/holiday-parties/index.html
+@@ -7,7 +7,8 @@
+   gtag('js', new Date());
+   gtag('config', 'AW-10933789586', {allow_enhanced_conversions: false});
+ </script>
+-<meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
++<meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><script src="../meta-pixel.js?v=meta-draft-1" defer></script>
++</head><body>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Company Holiday Parties and Catering in SoCal | The Picnic Collective</title>
+--- a/holiday-parties/trends.html
++++ b/holiday-parties/trends.html
+@@ -211,5 +211,6 @@
+ .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+ .reveal.in{opacity:1;transform:none}
+ </style>
++<script src="../meta-pixel.js?v=meta-draft-1" defer></script>
+ </head>
+ <body>
+--- a/socal-holiday-party-planning/index.html
++++ b/socal-holiday-party-planning/index.html
+@@ -58,6 +58,7 @@
+ .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}@media (max-width:760px){.cols{grid-template-columns:1fr}}
+ ol li{margin:6px 0}
+ </style>
++<script src="../meta-pixel.js?v=meta-draft-1" defer></script>
+ </head>
+ <body>
+ <header><div class="wrap">
