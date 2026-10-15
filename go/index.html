@@ -9,7 +9,7 @@
          book:'https://thepicniccollective.hbportal.co/schedule/66673cf26bf84d002bbb2e10'};
   var q=new URLSearchParams(location.search), d=D[q.get('d')]?q.get('d'):'home', c=q.get('c')||'';
   var EP='https://script.google.com/macros/s/AKfycbwRRRt6sh7mDnbeth36U42YV1wDcaErmySejMLe0rKVPt6HpfbCe2SzxKSVSRJ35_FQJw/exec';
-  try{ if(/^\d+-\d+-[A-Za-z0-9_-]{10}$/.test(c)) navigator.sendBeacon(EP,new URLSearchParams({k:'click',c:c,d:d})); }catch(e){}
+  try{ if(/^\d+-\d+-[A-Za-z0-9_-]{10}$/.test(c)) navigator.sendBeacon(EP,new URLSearchParams({k:'click',ck:c,d:d})); }catch(e){}
   setTimeout(function(){ location.replace(D[d]); },150);
 })();
 </script>
