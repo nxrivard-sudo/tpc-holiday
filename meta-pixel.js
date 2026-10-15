@@ -1,5 +1,4 @@
-/* Holiday marketing Pixel: explicit opt-in, local preference, GPC override.
- * No request or event until explicit marketing consent; GPC overrides consent.
+/* Holiday marketing Pixel: on by default (no banner); GPC and a stored "no" override.
  * Lead = scheduler-link click proxy, NEVER a submitted inquiry or booking.
  * No advanced matching, email, phone, booking URL or campaign data supplied.
  */
@@ -63,38 +62,13 @@
     window.fbq('trackSingle', pixelId, 'Lead', { content_name: 'HoneyBook scheduler click' });
   }
   window.TPCHolidayMeta = { setConsent: setConsent, schedulerRedirect: schedulerRedirect };
-  // No noscript bypass. Preferences apply only to this holiday origin.
-  function consentUI() {
+  // No consent banner (Nick 2026-10-15): on by default, like the main Squarespace site.
+  // Browsers sending Global Privacy Control are still never tracked; a prior explicit "no" is respected.
+  (function autoConsent() {
     var preference = null;
     try { preference = localStorage.getItem('tpc_holiday_marketing_consent'); } catch (e) {}
-    if (preference === 'yes') setConsent(true);
-    var panel = document.createElement('section');
-    panel.setAttribute('aria-label', 'Marketing privacy choices');
-    panel.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;z-index:99999;background:#fff;color:#222;border:1px solid #777;padding:14px;font:14px/1.5 system-ui;box-shadow:0 2px 12px #0003;max-width:600px';
-    var text = document.createElement('p');
-    text.textContent = 'Optional Meta (Facebook/Instagram) tracking helps us measure holiday ads and show relevant ads. It shares page visits and planning-link clicks with Meta. Choose Allow or Decline; you can change your choice anytime.';
-    panel.appendChild(text);
-    function button(label, action) {
-      var b = document.createElement('button'); b.type = 'button'; b.textContent = label;
-      b.style.cssText = 'margin:4px;padding:8px 14px;font:inherit;cursor:pointer';
-      b.addEventListener('click', action); panel.appendChild(b); return b;
-    }
-    var toggle = document.createElement('button');
-    toggle.type = 'button'; toggle.textContent = 'Privacy choices';
-    toggle.style.cssText = 'position:fixed;bottom:5px;left:5px;z-index:99998;background:#fff;color:#222;border:1px solid #777;padding:6px;font:12px system-ui;cursor:pointer';
-    toggle.addEventListener('click', function () { panel.hidden = false; });
-    function choose(value) {
-      try { localStorage.setItem('tpc_holiday_marketing_consent', value ? 'yes' : 'no'); } catch (e) {}
-      setConsent(value); panel.hidden = true;
-    }
-    if (navigator.globalPrivacyControl !== true) button('Allow', function () { choose(true); });
-    else text.textContent = 'Global Privacy Control is on. Meta marketing tracking is disabled.';
-    button('Decline', function () { choose(false); });
-    panel.hidden = preference === 'yes' || preference === 'no' || navigator.globalPrivacyControl === true;
-    document.body.appendChild(toggle); document.body.appendChild(panel);
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', consentUI, {once:true});
-  else consentUI();
+    if (preference !== 'no') setConsent(true);
+  })();
   document.addEventListener('click', function (event) {
     if (!ready()) return;
     var anchor = event.target.closest && event.target.closest('a[href]');
