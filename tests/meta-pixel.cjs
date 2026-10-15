@@ -14,7 +14,7 @@ function setup({ placeholder=false, gpc=false, withGoogle=false }={}) {
   const googleEvents=[];
   w.gtag=(...args)=>googleEvents.push(args);
   if (withGoogle) { w.eval(google); w.document.dispatchEvent(new w.Event('DOMContentLoaded')); }
-  w.eval(placeholder ? source : source.replace("'PIXEL_ID'", "'123456789012345'"));
+  w.eval(placeholder ? source.replace("'547128289323855'", "'PIXEL_ID'") : source);
   return {dom,w,googleEvents, events:()=>Array.from(w.fbq?.queue || []).map(a=>Array.from(a))};
 }
 let t=setup({placeholder:true}); t.w.TPCHolidayMeta.setConsent(true); t.w.document.querySelector('#book').click(); assert.equal(t.w.fbq, undefined); assert.equal(t.w.document.querySelectorAll('script').length,0); t.dom.window.close();
@@ -33,4 +33,19 @@ const lead=t.events().find(a=>a[2]==='Lead'); assert.deepEqual(Object.keys(lead[
 t.w.TPCHolidayMeta.setConsent(false); const n=t.events().length; t.w.document.querySelector('#book').click(); assert.equal(t.events().length,n); assert.equal(t.events().at(-1)[1],'revoke');
 t.w.TPCHolidayMeta.setConsent(true); Object.defineProperty(t.w.navigator,'globalPrivacyControl',{value:true}); t.w.document.querySelector('#book').click(); assert.equal(t.events().filter(a=>a[2]==='Lead').length,1);
 t.dom.window.close();
+t=setup(); t.w.TPCHolidayMeta.schedulerRedirect(); assert.equal(t.w.fbq,undefined);
+t.w.TPCHolidayMeta.setConsent(true); t.w.TPCHolidayMeta.schedulerRedirect(); t.w.TPCHolidayMeta.schedulerRedirect();
+assert.equal(t.events().filter(a=>a[2]==='Lead').length,1, 'go booking redirect counts once after consent'); t.dom.window.close();
+t=setup(); t.w.history.replaceState({},'', '/go/?d=book&ck=private'); t.w.TPCHolidayMeta.setConsent(true); t.w.TPCHolidayMeta.schedulerRedirect(); assert.equal(t.w.fbq,undefined); t.dom.window.close();
+t=setup(); t.w.document.dispatchEvent(new t.w.Event('DOMContentLoaded'));
+let panel=t.w.document.querySelector('section[aria-label="Marketing privacy choices"]');
+assert.ok(panel && !panel.hidden); Array.from(panel.querySelectorAll('button')).find(b=>b.textContent==='Allow').click();
+assert.equal(t.w.localStorage.getItem('tpc_holiday_marketing_consent'),'yes'); assert.equal(t.events().filter(a=>a[2]==='PageView').length,1);
+Array.from(panel.querySelectorAll('button')).find(b=>b.textContent==='Decline').click();
+assert.equal(t.w.localStorage.getItem('tpc_holiday_marketing_consent'),'no'); assert.equal(t.events().at(-1)[1],'revoke'); t.dom.window.close();
+for (const file of ['index.html','holiday-at-home/index.html','holiday-parties/index.html','holiday-parties/trends.html','gift/index.html','socal-holiday-party-planning/index.html','go/index.html']) {
+ const html=fs.readFileSync(path.join(root,file),'utf8'); assert.equal((html.match(/<script[^>]+src="[^\"]*meta-pixel\.js/g)||[]).length,1,file);
+ assert.ok(html.includes('547128289323855'),file+' Pixel ID');
+}
+console.log('PASS: live Pixel ID, all 7 integrations, consent UI/withdrawal, go booking proxy dedupe and token suppression.');
 console.log('PASS: placeholder inert; zero network before consent; denial/GPC; one script/init/PageView; exact HoneyBook origin; double-click dedupe; revocation; no PII payload; existing Google event coexistence.');

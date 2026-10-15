@@ -1,4 +1,6 @@
-# Holiday 2026 Meta Pixel — unshipped draft
+# Holiday 2026 Meta Pixel — original draft reference
+
+**Superseded by the approved main-branch installation.** Real Pixel ID 547128289323855 is integrated on all seven pages with an explicit Allow/Decline marketing choice, local preference persistence and a Privacy choices withdrawal control. GPC and PII-query suppression remain enforced. Consent-authorized `/go/?d=book` redirects now send the same scheduler-click Lead proxy once. All original draft instructions below are historical, not current deployment status.
 
 Branch: `meta-pixel`. No deployment, push, merge, account access or live Meta request was performed. Existing files are unchanged. `meta-pixel.js`, `meta-pixel-integration.patch`, and `tests/meta-pixel.cjs` are new files only.
 

@@ -8,7 +8,8 @@
   gtag('config', 'AW-10933789586', {allow_enhanced_conversions: false});
 </script>
 <meta charset="utf-8"><meta name="robots" content="noindex">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>The Picnic Collective</title></head>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>The Picnic Collective</title><script src="../meta-pixel.js?v=meta-live-1" data-pixel-id="547128289323855" defer></script>
+</head>
 <body style="font-family:Georgia,serif;text-align:center;padding:60px 20px;color:#333">
 <p>One moment…</p>
 <script src="../tracking.js?v=ads-consult-1"></script>
@@ -20,7 +21,10 @@
   var q=new URLSearchParams(location.search), d=D[q.get('d')]?q.get('d'):'home', c=q.get('c')||'';
   var EP='https://script.google.com/macros/s/AKfycbwRRRt6sh7mDnbeth36U42YV1wDcaErmySejMLe0rKVPt6HpfbCe2SzxKSVSRJ35_FQJw/exec';
   try{ if(/^\d+-\d+-[A-Za-z0-9_-]{10}$/.test(c)) navigator.sendBeacon(EP,new URLSearchParams({k:'click',ck:c,d:d})); }catch(e){}
-  function redirect(){ location.replace(window.TPCHolidayTracking ? window.TPCHolidayTracking.url(D[d]) : D[d]); }
+  function redirect(){
+    if(d === 'book' && window.TPCHolidayMeta) window.TPCHolidayMeta.schedulerRedirect();
+    location.replace(window.TPCHolidayTracking ? window.TPCHolidayTracking.url(D[d]) : D[d]);
+  }
   if(d === 'book' && window.TPCHolidayTracking) window.TPCHolidayTracking.consultClick(redirect);
   else setTimeout(redirect,150);
 })();
