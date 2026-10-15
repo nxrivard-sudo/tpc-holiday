@@ -1,6 +1,21 @@
-# Holiday-at-Home lead intake — rollout pending
+# Holiday-at-Home lead intake — deployed; worker blocked
 
-**Status: browser handoff and worker implemented; NOT operational until the existing Apps Script web app is redeployed.** No production QA submission or estimate email has been sent. No HoneyBook QA project exists yet.
+**Status: Apps Script version 4 deployed and receiver verified; NOT operational because the single live QA failed in the HoneyBook worker. Worker disabled.** One production QA submission was accepted; no estimate email or staff alert was sent. Read-only HoneyBook verification found no QA project or matching events@ contact.
+
+## Deployment and single live QA result — 2026-10-15
+
+- Signed-in editor account verified as `events@thepicniccollective.com`. Added `Planner.gs` and the two hooks below. Reloaded editor and verified exact Planner source plus both saved hooks. The unsubscribe `SECRET` was preserved, checked in-page before saving; never copied into this repository.
+- Updated only the existing active deployment `AKfycbwRRRt6sh7mDnbeth36U42YV1wDcaErmySejMLe0rKVPt6HpfbCe2SzxKSVSRJ35_FQJw` from version 3 to **version 4**. Existing `/exec` URL, execute-as events@ and Anyone access retained. No authorization prompt or new scopes.
+- `curl -LsS /exec?action=planner_health` returned `{"planner_schema":1}`. Browser fetch from `https://holiday.thepicniccollective.com` returned the same JSON.
+- Invalid unsubscribe token regression: captured before editing using `e=planner-qa-invalid@example.invalid&t=invalid`; before/after HTTP 200 and identical visible text `Unsubscribe`. No real customer link used.
+- Submitted once through the live planner: **QA TEST - delete**, **events@thepicniccollective.com**, **2026-12-12**, 12 adults, Orange County. Exact displayed total **$2,276**: cocktail styling $318, Holiday Cocktail Hour $432, cocoa $204, gingerbread decorating $948; items $1,902, service/production $210, sales tax $164 (plus included celebration/color rows).
+- Receiver accepted a nonduplicate intake id `aa79aa8d202faf0bc0a2c03f9bc6e039fab57a78bf1e9dbec7ddb434d4bc64a9`.
+- Invoked only the planner worker with the normal staff-alert callback. It failed before recording HoneyBook success: `StopIteration` in `holiday_planner_leads.mcp()` line 50 after `json.loads(text)` failed. The response did not contain a parseable JSON result or a JSON-prefixed line. Root cause upstream of that parser is not yet established; do not claim successful creation.
+- Disabled immediately by removing `~/.hermes/state/holiday_planner_leads.enabled`; verified marker absent. The QA remains in the Apps Script queue; do not submit another production QA.
+- Read-only HoneyBook MCP lookup by stable marker `aa79aa8d202f`: **0 projects**; exact events@ contact search: **0 contacts**. No archive ids available.
+- Gmail API through `_gmail_api_access_token()` found **0 messages** for `rfc822msgid:holiday-estimate-aa79aa8d202faf0bc0a2c03f9bc6e039fab57a78bf1e9dbec7ddb434d4bc64a9@thepicniccollective.com`. No Gmail message id or emailed-row comparison available.
+- Staff delivery state has no `planner:<intake-id>` entry. **No Nick Telegram or Lauren SMS alert fired** because HoneyBook failed first. No real-customer messages sent.
+- Next repair: inspect the HoneyBook MCP write-result contract/error before any retry; reconcile existing project/contact and Gmail state first, then resume the same queued QA only with authorization. Keep worker disabled until this is resolved.
 
 ## Chosen design
 
