@@ -1316,7 +1316,14 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
     if($('w-lead'))$('w-lead').addEventListener('submit',function(e){e.preventDefault();
       var n=$('l-name').value.trim(),m=$('l-email').value.trim(),ph=$('l-phone').value.trim(),d=$('l-date').value;
       if(!n||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){$('l-err').textContent='Add your name and a valid email to see your estimate.';return;}
-      st.lead={name:n,email:m,phone:ph,at:new Date().toISOString()};if(d)st.date=d;save();render();});
+      st.lead={name:n,email:m,phone:ph,at:new Date().toISOString()};if(d)st.date=d;save();render();
+      // Render first: a slow/offline intake must never gate the visitor's estimate.
+      try {
+        var estimate=compute(),rows=Array.prototype.map.call(document.querySelectorAll('.sumtable tr'),function(row){return Array.prototype.map.call(row.cells,function(cell){return cell.textContent.trim();});});
+        var payload={action:'planner_lead',schema:1,submission_id:(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)),name:n,email:m,phone:ph,date:st.date,area:st.area,guests:estimate.g,kids:estimate.k,source:'at-home planner',summary:$('w-sum').textContent,rows:rows,total:rows[rows.length-1][1],total_amount:estimate.tot,disclaimer:document.querySelector('.sumtable + .fine').textContent,website:''};
+        if(window.TPCPlannerLeads)window.TPCPlannerLeads.submit(payload);
+      } catch(ignore) { /* Estimate remains available even with blocked storage/network. */ }
+    });
   }
   function upd(){var r=compute();var np=r.lines.filter(function(l){return !l.inc}).length;$('w-run').innerHTML=np+'<small>'+(np===1?'pick':'picks')+'</small>';}
   function selectEl(el,b){var rg=document.createRange();rg.selectNodeContents(el);var sl=window.getSelection();sl.removeAllRanges();sl.addRange(rg);b.textContent='Selected, press copy';}
@@ -1382,5 +1389,6 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
 })();
 </script>
 
+<script src="planner-leads.js?v=1"></script>
 <script src="../tracking.js?v=ads-consult-1"></script>
 </body></html>

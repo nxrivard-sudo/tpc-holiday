@@ -1,0 +1,21 @@
+// Isolated Apps Script harness: no production submissions or emails.
+const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),crypto=require('node:crypto');
+const props={};let locks=0;
+const context={SECRET:'test-only',ContentService:{MimeType:{JSON:'json'},createTextOutput:text=>({text,setMimeType(){return this;}})},PropertiesService:{getScriptProperties:()=>({getProperties:()=>({...props}),getProperty:k=>props[k],setProperty:(k,v)=>props[k]=v,deleteProperty:k=>delete props[k]})},Utilities:{DigestAlgorithm:{SHA_256:'sha256'},computeDigest:(_,s)=>[...crypto.createHash('sha256').update(s).digest()],newBlob:s=>({getBytes:()=>Buffer.from(s)})},LockService:{getScriptLock:()=>({waitLock(){locks++},releaseLock(){locks--}})},Date,JSON};
+vm.createContext(context);vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../server/Planner.gs'),'utf8'),context);
+const post=p=>JSON.parse(context.plannerPost_({postData:{contents:JSON.stringify(p)}}).text);
+const get=q=>JSON.parse(context.plannerGet_(q).text);
+const p={action:'planner_lead',schema:1,name:'QA fixture',email:'test@example.invalid',rows:[['Items','$100'],['Estimated total','$100']],total:'$100',total_amount:100,summary:'Holiday selections',disclaimer:'An estimate, not a quote.',area:'Orange County',guests:20,kids:0};
+assert.equal(get({action:'planner_health'}).planner_schema,1);
+let result=post(p);assert.equal(result.ok,true);assert.match(result.id,/^[a-f0-9]{64}$/);const id=result.id;
+assert.equal(post(p).duplicate,true);assert.equal(get({action:'planner_list',key:'wrong'}).ok,false);
+assert.equal(Object.keys(get({action:'planner_list',key:'test-only'}).leads).length,1);
+assert.equal(post({...p,total:'$2'}).ok,false);assert.equal(post({...p,website:'spam'}).ok,false);
+assert.equal(post({action:'planner_ack',id,key:'wrong'}).ok,false);
+assert.equal(post({action:'planner_ack',id,key:'test-only'}).ok,true);
+assert.equal(Object.keys(get({action:'planner_list',key:'test-only'}).leads).length,0);
+assert.equal(post(p).duplicate,true,'dedupe survives queue acknowledgement');
+for(let n=2;n<=3;n++)assert.equal(post({...p,guests:n}).ok,true);
+assert.equal(post({...p,guests:4}).error,'limited');
+assert.equal(locks,0);assert.equal(context.plannerPost_({postData:{contents:'not JSON'}}),null);
+console.log('PASS receiver: validation, authenticated polling/ack, durable queue, rolling 24h dedupe after ack, per-recipient limit and lock release (isolated Apps Script mocks).');
