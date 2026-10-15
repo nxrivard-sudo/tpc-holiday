@@ -45,9 +45,25 @@
     var href = anchor.getAttribute('href');
     var next = trackedUrl(href);
     if (href !== next) anchor.setAttribute('href', next);
+    if (window.self !== window.top && /^https:\/\/[^/]*\.hbportal\.co\//.test(next)) anchor.target = '_top';
   }
   function start() {
     decorate(document);
+    if (window.self !== window.top) {
+      document.documentElement.style.overflow = 'hidden';
+      var lastHeight = 0;
+      function reportHeight() {
+        var height = Math.ceil(document.documentElement.scrollHeight);
+        if (height !== lastHeight) {
+          lastHeight = height;
+          window.parent.postMessage({ tpcHeight: height }, '*');
+        }
+      }
+      window.addEventListener('load', reportHeight);
+      window.addEventListener('resize', reportHeight);
+      new ResizeObserver(reportHeight).observe(document.body);
+      reportHeight();
+    }
     new MutationObserver(function (records) {
       records.forEach(function (record) {
         if (record.type === 'attributes') update(record.target);
