@@ -52,17 +52,23 @@
     if (window.self !== window.top) {
       document.documentElement.style.overflow = 'hidden';
       var lastHeight = 0;
-      function reportHeight() {
-        var height = Math.ceil(document.documentElement.scrollHeight);
-        if (height !== lastHeight) {
+      function reportHeight(navigation) {
+        // The document scrollHeight cannot shrink below the iframe viewport.
+        var body = document.body;
+        var style = getComputedStyle(body);
+        var height = Math.ceil(body.getBoundingClientRect().height +
+          (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0));
+        if (height !== lastHeight || navigation === true) {
           lastHeight = height;
-          window.parent.postMessage({ tpcHeight: height }, '*');
+          window.parent.postMessage({ tpcHeight: height, tpcNavigation: navigation === true }, '*');
         }
       }
-      window.addEventListener('load', reportHeight);
-      window.addEventListener('resize', reportHeight);
-      new ResizeObserver(reportHeight).observe(document.body);
-      reportHeight();
+      window.addEventListener('load', function () { reportHeight(); });
+      window.addEventListener('resize', function () { reportHeight(); });
+      window.addEventListener('pageshow', function (event) { reportHeight(event.persisted); });
+      new ResizeObserver(function () { reportHeight(); }).observe(document.body);
+      if (document.fonts) document.fonts.ready.then(function () { reportHeight(); });
+      reportHeight(true);
     }
     new MutationObserver(function (records) {
       records.forEach(function (record) {
