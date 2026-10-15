@@ -35,6 +35,20 @@ function setup(query = '', saved, blocked = false) {
   link.href = booking + '?estimate=custom';
   await new Promise(r => setTimeout(r, 0));
   assert.equal(new URL(link.href).searchParams.get('src'), 'instagram');
+  const events = [];
+  w.gtag = (...args) => events.push(args);
+  w.document.addEventListener('click', e => e.preventDefault());
+  w.document.querySelector('#book').click();
+  assert.equal(events.length, 1);
+  assert.equal(events[0][0], 'event');
+  assert.equal(events[0][1], 'conversion');
+  assert.equal(events[0][2].send_to, 'AW-10933789586/C6GcCMqvsp0dEJLH0d0o');
+  assert.equal(events[0][2].transport_type, 'beacon');
+  assert.deepEqual(Object.keys(events[0][2]).sort(), ['send_to','transport_type','event_callback','event_timeout'].sort());
+  w.document.querySelector('#internal').click();
+  w.document.querySelector('#external').click();
+  w.document.querySelector('#email').click();
+  assert.equal(events.length, 1, 'Only HoneyBook consult links count');
   dom.window.close();
   dom = setup('', {src:'email', utm_campaign:'return-visit'});
   assert.equal(new URL(dom.window.document.querySelector('#book').href).searchParams.get('src'), 'email'); dom.window.close();
@@ -50,7 +64,7 @@ function setup(query = '', saved, blocked = false) {
   for (const destination of ['home','company','book','https://evil.example']) {
     let redirected;
     const html = readFileSync(resolve(root,'go/index.html'),'utf8');
-    const inline = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+    const inline = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(-1)[1];
     vm.runInNewContext(inline, {URLSearchParams, location:{search:'?d='+encodeURIComponent(destination), replace(value){redirected=value;}}, navigator:{sendBeacon(){throw Error('unexpected beacon');}}, setTimeout(fn){fn();}, window:dom.window});
     const result = new URL(redirected);
     assert.equal(result.searchParams.get('src'), 'newsletter');
@@ -63,9 +77,9 @@ function setup(query = '', saved, blocked = false) {
   for (const page of pages) {
     const html = readFileSync(resolve(root,page), 'utf8');
     const doc = new JSDOM(html).window.document;
-    const scripts = [...doc.querySelectorAll('script[src]')].filter(s => s.getAttribute('src').endsWith('tracking.js'));
+    const scripts = [...doc.querySelectorAll('script[src]')].filter(s => s.getAttribute('src').split('?')[0].endsWith('tracking.js'));
     assert.equal(scripts.length, 1, page);
-    assert.equal(resolve(dirname(resolve(root,page)), scripts[0].getAttribute('src')), resolve(root,'tracking.js'));
+    assert.equal(resolve(dirname(resolve(root,page)), scripts[0].getAttribute('src').split('?')[0]), resolve(root,'tracking.js'));
     // Parse every inline executable script to catch injection/integration syntax errors.
     for (const script of doc.querySelectorAll('script:not([src])')) {
       if (!script.type || script.type === 'text/javascript') new vm.Script(script.textContent, {filename:page});
@@ -79,6 +93,7 @@ function setup(query = '', saved, blocked = false) {
   assert.equal(gift.querySelectorAll('.card').length, 3);
   for (const amount of ['$100','$250','$500']) assert.ok(gift.body.textContent.includes(amount));
   assert.equal(gift.querySelectorAll('form').length, 0);
-  assert.ok(gift.body.textContent.includes('PRICE TBD'));
+  assert.ok(gift.body.textContent.includes('secure payment link'));
+  assert.equal(gift.querySelectorAll('input[type="password"],input[autocomplete="cc-number"]').length, 0);
   console.log('PASS: attribution URL/storage, all six parameters, internal navigation, existing query/hash, dynamic links, campaign replacement, blocked storage, redirect allowlist, all 7 page integrations, inline syntax, local images and gift draft safeguards.');
 })().catch(error => {console.error(error); process.exitCode=1;});

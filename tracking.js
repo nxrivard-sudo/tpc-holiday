@@ -1,4 +1,4 @@
-/* Local attribution only; no analytics requests or personal data collection.
+/* Local attribution plus Google Ads consult-click measurement; no personal data supplied.
  * New tagged visits replace the previous campaign; untagged visits retain it.
  * Existing destination params win. Storage failure never blocks navigation.
  */
@@ -35,7 +35,25 @@
     });
     return url.href;
   }
-  window.TPCHolidayTracking = { url: trackedUrl };
+  function consultClick(done) {
+    // Never pass the booking URL, attribution parameters, or form/customer data.
+    var finished = false;
+    function finish() {
+      if (!finished) { finished = true; if (done) done(); }
+    }
+    if (done) setTimeout(finish, 1500);
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-10933789586/C6GcCMqvsp0dEJLH0d0o',
+          transport_type: 'beacon',
+          event_callback: finish,
+          event_timeout: 1500
+        });
+      } else finish();
+    } catch (error) { finish(); }
+  }
+  window.TPCHolidayTracking = { url: trackedUrl, consultClick: consultClick };
   function decorate(root) {
     var anchors = root.querySelectorAll ? root.querySelectorAll('a[href]') : [];
     if (root.matches && root.matches('a[href]')) update(root);
@@ -47,7 +65,10 @@
     if (href !== next) anchor.setAttribute('href', next);
     if (window.self !== window.top && /^https:\/\/[^/]*\.hbportal\.co\//.test(next)) anchor.target = '_top';
   }
+  var started = false;
   function start() {
+    if (started) return;
+    started = true;
     decorate(document);
     if (window.self !== window.top) {
       document.documentElement.style.overflow = 'hidden';
@@ -78,7 +99,12 @@
     }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] });
     document.addEventListener('click', function (event) {
       var anchor = event.target.closest && event.target.closest('a[href]');
-      if (anchor) update(anchor);
+      if (anchor) {
+        update(anchor);
+        try {
+          if (new URL(anchor.href, location.href).origin === 'https://thepicniccollective.hbportal.co') consultClick();
+        } catch (error) { /* Malformed links must not interrupt navigation. */ }
+      }
     }, true);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);

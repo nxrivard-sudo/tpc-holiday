@@ -1,8 +1,17 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<!doctype html><html><head>
+<!-- Google Ads: consult-click measurement; no enhanced conversions. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10933789586"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-10933789586', {allow_enhanced_conversions: false});
+</script>
+<meta charset="utf-8"><meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>The Picnic Collective</title></head>
 <body style="font-family:Georgia,serif;text-align:center;padding:60px 20px;color:#333">
 <p>One moment…</p>
-<script src="../tracking.js?v=168de8a"></script>
+<script src="../tracking.js?v=ads-consult-1"></script>
 <script>
 // Email link-click counter. Fixed destinations only (no open redirect). Count is fire-and-forget; redirect never waits on it.
 (function(){
@@ -11,7 +20,9 @@
   var q=new URLSearchParams(location.search), d=D[q.get('d')]?q.get('d'):'home', c=q.get('c')||'';
   var EP='https://script.google.com/macros/s/AKfycbwRRRt6sh7mDnbeth36U42YV1wDcaErmySejMLe0rKVPt6HpfbCe2SzxKSVSRJ35_FQJw/exec';
   try{ if(/^\d+-\d+-[A-Za-z0-9_-]{10}$/.test(c)) navigator.sendBeacon(EP,new URLSearchParams({k:'click',ck:c,d:d})); }catch(e){}
-  setTimeout(function(){ location.replace(window.TPCHolidayTracking ? window.TPCHolidayTracking.url(D[d]) : D[d]); },150);
+  function redirect(){ location.replace(window.TPCHolidayTracking ? window.TPCHolidayTracking.url(D[d]) : D[d]); }
+  if(d === 'book' && window.TPCHolidayTracking) window.TPCHolidayTracking.consultClick(redirect);
+  else setTimeout(redirect,150);
 })();
 </script>
 <noscript><a href="https://holiday.thepicniccollective.com/">Continue to The Picnic Collective</a></noscript>
