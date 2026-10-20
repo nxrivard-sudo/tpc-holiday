@@ -1105,4 +1105,39 @@ footer a{color:var(--brass-lt);text-decoration:none}
 </script>
 
 <script src="../tracking.js?v=ads-consult-1"></script>
+
+<script id="tpc-company-embedded-navigation-v1">
+/* Navigation-only fix: native fragment links in the full-height Squarespace embed. */
+(function () {
+  'use strict';
+  if (window.self === window.top) return;
+  var pending = 0;
+  function reveal(hash) {
+    var id;
+    try { id = decodeURIComponent((hash || '').slice(1)); } catch (error) { return; }
+    var target = id && document.getElementById(id);
+    if (!target) return;
+    if (pending) cancelAnimationFrame(pending);
+    pending = requestAnimationFrame(function () {
+      pending = 0;
+      // Unlike a fragment-only jump, this also reveals the containing iframe in the outer page.
+      target.scrollIntoView({ block: 'start', behavior: 'auto' });
+    });
+  }
+  document.addEventListener('click', function (event) {
+    if (event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var anchor = event.target.closest && event.target.closest('a[href]');
+    if (!anchor || anchor.hasAttribute('download') || (anchor.target && anchor.target !== '_self')) return;
+    try {
+      var url = new URL(anchor.href, location.href);
+      if (url.origin !== location.origin || url.pathname !== location.pathname || !url.hash) return;
+      // Keep native URL/history, campaign parameters, modified clicks and outbound links intact.
+      reveal(url.hash);
+    } catch (error) { /* Invalid links must not break normal navigation. */ }
+  });
+  window.addEventListener('hashchange', function () { reveal(location.hash); });
+  window.addEventListener('load', function () { reveal(location.hash); });
+  window.addEventListener('pageshow', function () { reveal(location.hash); });
+})();
+</script>
 </body></html>
