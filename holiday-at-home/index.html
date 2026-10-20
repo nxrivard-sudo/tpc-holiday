@@ -1391,4 +1391,69 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
 
 <script src="planner-leads.js?v=1"></script>
 <script src="../tracking.js?v=ads-consult-1"></script>
+
+<script id="tpc-at-home-embedded-navigation-v1">
+/* Navigation-only fix: native fragment links in the full-height Squarespace embed. */
+(function () {
+  'use strict';
+  if (window.self === window.top) return;
+  var pending = 0;
+  var activeTarget = null;
+  var settleUntil = 0;
+  var lastTop = null;
+  var lastViewport = null;
+  var interacted = false;
+  function queueReveal() {
+    if (pending) cancelAnimationFrame(pending);
+    pending = requestAnimationFrame(function () {
+      pending = 0;
+      if (!activeTarget || Date.now() > settleUntil) return;
+      activeTarget.scrollIntoView({ block: 'start', behavior: 'instant' });
+      lastTop = activeTarget.getBoundingClientRect().top;
+      lastViewport = window.innerHeight;
+    });
+  }
+  function reveal(hash) {
+    var id;
+    try { id = decodeURIComponent((hash || '').slice(1)); } catch (error) { return; }
+    var target = id && document.getElementById(id);
+    if (!target) return;
+    activeTarget = target;
+    settleUntil = Date.now() + 4000;
+    lastTop = null;
+    lastViewport = null;
+    queueReveal();
+  }
+  function layoutChanged() {
+    if (!activeTarget || Date.now() > settleUntil) { activeTarget = null; return; }
+    var top = activeTarget.getBoundingClientRect().top;
+    if (lastTop === null || Math.abs(top - lastTop) > 1 || lastViewport !== window.innerHeight) queueReveal();
+  }
+  function userInteracted() {
+    interacted = true;
+    activeTarget = null;
+    if (pending) cancelAnimationFrame(pending);
+    pending = 0;
+  }
+  ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(function (name) {
+    document.addEventListener(name, userInteracted, { capture: true, passive: true });
+  });
+  document.addEventListener('click', function (event) {
+    if (event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var anchor = event.target.closest && event.target.closest('a[href]');
+    if (!anchor || anchor.hasAttribute('download') || (anchor.target && anchor.target !== '_self')) return;
+    try {
+      var url = new URL(anchor.href, location.href);
+      if (url.origin !== location.origin || url.pathname !== location.pathname || !url.hash) return;
+      reveal(url.hash);
+    } catch (error) { /* Invalid links must not break normal navigation. */ }
+  });
+  window.addEventListener('hashchange', function () { reveal(location.hash); });
+  window.addEventListener('resize', layoutChanged);
+  document.addEventListener('load', layoutChanged, true);
+  if (window.ResizeObserver) new ResizeObserver(layoutChanged).observe(document.body);
+  window.addEventListener('load', function () { if (!interacted) reveal(location.hash); });
+  window.addEventListener('pageshow', function () { if (!interacted) reveal(location.hash); });
+})();
+</script>
 </body></html>
