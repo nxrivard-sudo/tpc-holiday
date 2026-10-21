@@ -1,0 +1,37 @@
+/* Booking-path candidate. Scoped overrides; existing photography and pricing retained. */
+.booking-intro{margin:18px 0 14px;max-width:58ch;font:16px/1.5 Jost,Arial,sans-serif}
+.booking-intro strong,.booking-intro span{display:block}
+.booking-intro span{margin-top:4px;font-size:14px}
+body .hero .booking-contact,body .mhero .booking-contact{font:15px/1.5 Jost,Arial,sans-serif;max-width:none;margin:14px 0}
+.booking-contact a{color:inherit;text-decoration:underline;text-underline-offset:3px;display:inline-block;padding:6px 0}
+body .hero .booking-price,body .mhero .booking-price{font:13px/1.5 Jost,Arial,sans-serif;max-width:58ch;margin:12px 0}
+body .hero .ctas,body .mhero .ctas{margin-top:14px;gap:10px}
+body .hero .booking-explore .btn,body .mhero .booking-explore .btn{background:transparent;color:inherit;border:0;padding:10px 0;text-decoration:underline;font-size:12px}
+body .hero .btn.line{border:1px solid #e4d3b4;color:#fff}
+.booking-bar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:12px 20px;background:#f7f1e8;color:#203d30;border-top:1px solid #bfa984;font:15px/1.4 Arial,sans-serif}
+.booking-bar a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;margin:0;background:#922c3d;border-radius:4px;color:white;text-decoration:none;font:inherit}
+.booking-bar a+ a{background:transparent;color:#203d30;border:1px solid #203d30}
+.booking-bar .booking-bar-note{width:100%;text-align:center;font-size:12px}
+body #fab{display:none!important}
+body .hero h1{font-size:clamp(52px,5.3vw,82px)}
+body .hero .wrap{padding-block:34px}
+body .hero p:not([class]){font-size:21px;margin-top:16px}
+body .mhero h1{font-size:clamp(58px,7vw,100px)}
+body .wfoot{flex-wrap:wrap}
+#preview-estimate{color:inherit;border:1px solid currentColor;min-height:44px;padding:10px;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:3px solid #b88a22;outline-offset:4px}
+@media(max-width:700px){
+ body .hero .wrap{grid-row:1;padding:24px 20px 28px}
+ body .hero-img,body .hero .frame{grid-row:2}
+ body .hero h1{font-size:52px}
+ body .hero p:not([class]){font-size:18px;max-width:34ch}
+ body .mhero{padding-top:32px}
+ body .mhero .lede{margin:12px 0}
+ body .mhero .hand{font-size:25px}
+ .booking-intro{font-size:15px;margin:12px 0}
+ .booking-intro span{font-size:13px}
+ body .hero .ctas .btn,body .mhero .ctas .btn{font-size:11px;padding:13px 15px;min-height:44px}
+ .booking-bar{position:sticky;bottom:0;z-index:45;padding:8px 10px max(8px,env(safe-area-inset-bottom))}
+ .booking-bar .booking-bar-note{display:none}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}

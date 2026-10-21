@@ -16,7 +16,7 @@
 <script>
 // Email link-click counter. Fixed destinations only (no open redirect). Count is fire-and-forget; redirect never waits on it.
 (function(){
-  var D={home:'https://holiday.thepicniccollective.com/holiday-at-home/',company:'https://holiday.thepicniccollective.com/holiday-parties/',
+  var D={home:new URL('../holiday-at-home/',location.href).href,company:new URL('../holiday-parties/',location.href).href,
          book:'https://thepicniccollective.hbportal.co/schedule/66673cf26bf84d002bbb2e10'};
   var q=new URLSearchParams(location.search), d=D[q.get('d')]?q.get('d'):'home', c=q.get('c')||'';
   var EP='https://script.google.com/macros/s/AKfycbwRRRt6sh7mDnbeth36U42YV1wDcaErmySejMLe0rKVPt6HpfbCe2SzxKSVSRJ35_FQJw/exec';

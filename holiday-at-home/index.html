@@ -631,7 +631,11 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
       <h1>Make it <span class="sq">merry<svg viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 20C40 4 70 30 110 16S170 2 210 16 270 30 296 10" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg></span>.</h1>
       <p class="hand">Friendsmas, family parties &amp; kids' parties</p>
       <p class="lede">Styled, catered and run by our team, from the cocoa cart to the last candy cane. You host. We handle everything else, right down to the dishes.</p>
-      <div class="ctas">
+      <div class="booking-intro"><strong>Start with a free 30-minute consultation.</strong><span>Bring your date, location and guest count. No need to build a package first. Event availability is confirmed with your proposal.</span></div>
+      <div class="ctas"><a class="btn" href="https://thepicniccollective.hbportal.co/schedule/66673cf26bf84d002bbb2e10" target="_blank" rel="noopener">Book a free consultation</a><a class="btn line" href="mailto:events@thepicniccollective.com?subject=Holiday%20party%20inquiry&amp;body=Event%20date%3A%0ALocation%3A%0AGuest%20count%3A%0ABudget%20range%3A%0AIdeas%3A">Email a party inquiry</a></div>
+      <p class="booking-contact"><a href="tel:+19492347102">Call 949-234-7102</a> · <a href="sms:+19492347102">Text us</a></p>
+      <p class="booking-price">A starting point: gingerbread decorating $79 per guest (10+ guests); cocktail styling $159 per table. These are individual services, not complete party prices. Service, tax, minimums and delivery may apply.</p>
+      <div class="ctas booking-explore">
         <a class="btn" href="#planner">Build your holiday party</a>
         <a class="btn line" href="#ideas">See party ideas</a>
       </div>
@@ -664,13 +668,13 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
   <div class="wrap cb">
     <div class="cbface" id="cb-face" aria-hidden="true"><span>LR</span><img class="cut c-hat" src="img/cut_santahat.webp" alt=""></div>
     <div class="cbtext">
-      <div class="eyebrow">Free 15-minute call</div>
+      <div class="eyebrow">Free 30-minute call</div>
       <h2>Not sure where to start?</h2>
       <p>Book a free call with <b>Lauren Rivard</b>, our founder and head planner, or someone on our event coordination team. Tell us the date, the guest list and the feeling you want. We'll bring ideas and real numbers.</p>
     </div>
     <div class="cbacts">
-      <a class="btn" data-call="lauren" href="#book">Book a free call with Lauren</a>
-      <a class="btn line" data-call="team" href="#book">Book with the coordination team</a>
+      <a class="btn" data-call="lauren" href="#book">Book a free consultation</a>
+      <a class="btn line" data-call="team" href="#book">Email a party inquiry</a>
       <a class="cbtel" href="tel:+19492347102">or call or text 949-234-7102</a>
     </div>
   </div>
@@ -962,7 +966,7 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
     <div>
       <div class="eyebrow">Talk to a planner</div>
       <h2 style="margin-top:12px">December weekends book by early November.</h2>
-      <p class="lead" style="color:#F1DCDD;margin-top:16px">Book a free call with Lauren Rivard, our founder and head planner, or our event coordination team. Or reach us directly.</p>
+      <p class="lead" style="color:#F1DCDD;margin-top:16px">Book a free consultation with Lauren Rivard, our founder and head planner, or our event coordination team. Or reach us directly.</p>
       <div class="contact">
         <div class="row"><span class="val">events@thepicniccollective.com</span><button class="copy" type="button" data-copy="events@thepicniccollective.com">Copy</button></div>
         <div class="row"><span class="val">949-234-7102</span><button class="copy" type="button" data-copy="949-234-7102">Copy</button></div>
@@ -987,7 +991,7 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
 (function(){
   /* ===== Settings Nick can change ===== */
   var CALENDLY_LAUREN = "https://thepicniccollective.hbportal.co/schedule/66673cf26bf84d002bbb2e10";   // e.g. "https://calendly.com/your-link/holiday-party-review"
-  var CALENDLY_TEAM   = "https://thepicniccollective.hbportal.co/schedule/66673cf26bf84d002bbb2e10";   // optional second link for the planning team
+  var CALENDLY_TEAM = "mailto:events@thepicniccollective.com?subject=Holiday%20party%20inquiry";   // optional second link for the planning team
   var LAUREN_PHOTO    = "";   // e.g. "img/lauren.jpg" once a headshot is added
 
   var $=function(id){return document.getElementById(id)};
@@ -1246,9 +1250,9 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
     var h='<div class="who">'+face+'<div><div class="role">Founder · Head planner</div><h4>Meet Lauren Rivard</h4></div></div>';
     h+='<p>Lauren founded The Picnic Collective in 2019 and heads our design and floral program. Book a free call with her or with our event coordination team of planners, event stylists and catering leads.</p>';
     var a=callHref('lauren',summary),b=callHref('team',summary);
-    h+='<a class="btn" href="'+a+'"'+callAttrs(a)+'>Book a free call with Lauren</a>';
-    h+='<a class="btn ghost" href="'+b+'"'+callAttrs(b)+'>Book with the coordination team</a>';
-    h+='<div class="alt">Free, 15 minutes, no obligation. Or call or text <a href="tel:+19492347102" style="color:var(--brass-lt)">949-234-7102</a>.</div>';
+    h+='<a class="btn" href="'+a+'"'+callAttrs(a)+'>Book a free consultation</a>';
+    h+='<a class="btn ghost" href="'+b+'"'+callAttrs(b)+'>Email a party inquiry</a>';
+    h+='<div class="alt">Free, 30 minutes, no obligation. Or call or text <a href="tel:+19492347102" style="color:var(--brass-lt)">949-234-7102</a>.</div>';
     return h;
   }
   function summaryText(r){
@@ -1270,18 +1274,8 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
     if(s.id==='basics'){
       h+='<div class="basics"><label for="w-g">Adult guests<input id="w-g" type="number" min="1" inputmode="numeric" value="'+st.guests+'"></label><label for="w-k">Kids (optional)<input id="w-k" type="number" min="0" inputmode="numeric" value="'+st.kids+'"></label><label for="w-a">Area<select id="w-a"><option data-t="0.0775">Orange County</option><option data-t="0.095">Los Angeles</option><option data-t="0.0775">San Diego</option></select></label><label for="w-d" style="grid-column:1/-1;max-width:260px">Event date (optional)<input id="w-d" type="date" value="'+esc(st.date)+'"></label></div>';
       h+='<p class="fine" style="margin-top:18px">Every dish, bar, rental and add-on from our full à la carte menu is inside these steps. Rather talk it through? <a href="#call">Book a free call</a> instead.</p>';
-    } else if(s.id==='summary'&&!st.lead){
-      var np2=r.lines.filter(function(l){return !l.inc}).length;
-      h+='<form class="gate" id="w-lead" novalidate><div class="gbadge">'+np2+(np2===1?' pick':' picks')+' saved</div>'
-        +'<h4>Where should we send your estimate?</h4><p>Your all-in estimate is ready. Tell us who you are and we\'ll show it right here, and Lauren can follow up with ideas for your party.</p>'
-        +'<div class="gf"><label for="l-name">Your name<input id="l-name" name="name" autocomplete="name" required></label>'
-        +'<label for="l-email">Email<input id="l-email" name="email" type="email" autocomplete="email" required></label>'
-        +'<label for="l-phone">Phone (optional)<input id="l-phone" name="phone" type="tel" autocomplete="tel"></label>'
-        +'<label for="l-date">Party date (optional)<input id="l-date" name="date" type="date" value="'+esc(st.date)+'"></label></div>'
-        +'<p class="gerr" id="l-err" role="alert"></p><button class="btn" type="submit">See my estimate</button>'
-        +'<p class="fine">We only use this to send your estimate and talk about your party. No spam, ever.</p></form>';
     } else if(s.id==='summary'){
-      h+='<p class="gthanks">Here\'s your merry estimate, '+esc((st.lead.name||'').split(' ')[0])+'! Send it to Lauren below to hold your date.</p>';
+      h+='<p class="gthanks">Your estimate is ready. No contact details required. To ask about your date, book a call or email your selections. An estimate does not reserve a date.</p>';
       var rows=r.lines.map(function(l){return '<tr><td>'+esc(l.label)+(l.note?' <span style="color:var(--muted)">('+esc(l.note)+')</span>':'')+(l.prop?' †':'')+'</td><td>'+(l.inc?'Included':l.quote?'Quoted':fmt(l.amt))+'</td></tr>'}).join('')||'<tr><td>No selections yet. Go back and pick a few options.</td><td></td></tr>';
       h+='<div class="sumgrid"><div><table class="sumtable"><tbody>'+rows+'<tr class="sub"><td>Items</td><td>'+fmt(r.sub)+'</td></tr><tr class="sub"><td>22% service and production</td><td>'+fmt(r.svc)+'</td></tr><tr class="sub"><td>Estimated sales tax ('+st.area+')</td><td>'+fmt(r.tax)+'</td></tr><tr class="tot"><td>Estimated total</td><td>'+fmt(r.tot)+'</td></tr></tbody></table><p class="fine">About '+fmt(r.tot/r.g)+' per adult guest for '+r.g+' guests. An estimate, not a quote. The 22% service and production charge applies to catering, bar, décor, rentals and florals. † Seasonal pricing confirmed in your proposal. Delivery, travel and venue fees are confirmed in your proposal.</p>';
       if(r.warns.length)h+='<div class="wwarn">'+r.warns.map(esc).join('<br>')+'<br>Lauren can suggest a version that fits your group.</div>';
@@ -1313,17 +1307,7 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
     if($('w-k2'))$('w-k2').addEventListener('input',function(){st.kids=Math.max(0,parseInt(this.value,10)||0);save();upd()});
     if($('w-copy'))$('w-copy').addEventListener('click',function(){var b=this,t=$('w-sum').textContent;try{navigator.clipboard.writeText(t).then(function(){b.textContent='Copied'},function(){selectEl($('w-sum'),b)})}catch(e){selectEl($('w-sum'),b)}});
     if($('w-restart'))$('w-restart').addEventListener('click',function(){var ld=st.lead;st=fresh();st.lead=ld;fillDefaults();save();render()});
-    if($('w-lead'))$('w-lead').addEventListener('submit',function(e){e.preventDefault();
-      var n=$('l-name').value.trim(),m=$('l-email').value.trim(),ph=$('l-phone').value.trim(),d=$('l-date').value;
-      if(!n||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){$('l-err').textContent='Add your name and a valid email to see your estimate.';return;}
-      st.lead={name:n,email:m,phone:ph,at:new Date().toISOString()};if(d)st.date=d;save();render();
-      // Render first: a slow/offline intake must never gate the visitor's estimate.
-      try {
-        var estimate=compute(),rows=Array.prototype.map.call(document.querySelectorAll('.sumtable tr'),function(row){return Array.prototype.map.call(row.cells,function(cell){return cell.textContent.trim();});});
-        var payload={action:'planner_lead',schema:1,submission_id:(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)),name:n,email:m,phone:ph,date:st.date,area:st.area,guests:estimate.g,kids:estimate.k,source:'at-home planner',summary:$('w-sum').textContent,rows:rows,total:rows[rows.length-1][1],total_amount:estimate.tot,disclaimer:document.querySelector('.sumtable + .fine').textContent,website:''};
-        if(window.TPCPlannerLeads)window.TPCPlannerLeads.submit(payload);
-      } catch(ignore) { /* Estimate remains available even with blocked storage/network. */ }
-    });
+
   }
   function upd(){var r=compute();var np=r.lines.filter(function(l){return !l.inc}).length;$('w-run').innerHTML=np+'<small>'+(np===1?'pick':'picks')+'</small>';}
   function selectEl(el,b){var rg=document.createRange();rg.selectNodeContents(el);var sl=window.getSelection();sl.removeAllRanges();sl.addRange(rg);b.textContent='Selected, press copy';}
@@ -1354,6 +1338,7 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
   $('w-body').addEventListener('change',function(e){var t=e.target;if(t.classList&&t.classList.contains('qn')){setX(t.getAttribute('data-x'),parseInt(t.value,10)||0);render(true);}});
   function go(d){st.i=Math.max(0,Math.min(STEPS.length-1,st.i+d));save();render();var t=$('planner');if(t&&t.getBoundingClientRect().top<0)t.scrollIntoView({block:'start'});}
   $('w-next').addEventListener('click',function(){go(1)});
+  var preview=document.createElement('button');preview.type='button';preview.className='copy';preview.id='preview-estimate';preview.textContent='Preview estimate now';$('w-next').parentNode.appendChild(preview);preview.addEventListener('click',function(){st.i=STEPS.length-1;save();render();$('w-body').scrollIntoView({block:'start'});});
   $('w-back').addEventListener('click',function(){go(-1)});
   var cf=$('cb-face');if(cf&&LAUREN_PHOTO)cf.innerHTML='<img src="'+LAUREN_PHOTO+'" alt="Lauren Rivard">';
   document.querySelectorAll('[data-story]').forEach(function(btn){btn.addEventListener('click',function(e){
@@ -1389,10 +1374,9 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
 })();
 </script>
 
-<script src="planner-leads.js?v=1"></script>
+<!-- Automatic lead queue paused: estimates are ungated; use explicit booking/email. -->
 <script src="../tracking.js?v=ads-consult-1"></script>
-
-<script id="tpc-at-home-embedded-navigation-v1">
+<link rel="stylesheet" href="../booking-path.css"><script id="tpc-at-home-embedded-navigation-v1">
 /* Navigation-only fix: native fragment links in the full-height Squarespace embed. */
 (function () {
   'use strict';
@@ -1456,4 +1440,4 @@ footer .merry{font-family:var(--hand);font-size:28px;color:var(--butter)}
   window.addEventListener('pageshow', function () { if (!interacted) reveal(location.hash); });
 })();
 </script>
-</body></html>
+<script src="../booking-path.js"></script></body></html>

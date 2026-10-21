@@ -439,9 +439,13 @@ footer a{color:var(--brass-lt);text-decoration:none}
     <div class="eyebrow">Corporate holiday parties · 2026</div>
     <h1>The holiday party,<br><i>handled.</i></h1>
     <p>Still need to book this year's company party? We design, cater and run it start to finish. Your team gets a night they'll talk about all year, and you get the credit.</p>
-    <div class="ctas">
+    <div class="booking-intro"><strong>Start with a free 30-minute consultation.</strong><span>Bring your date, location and guest count. No need to build a package first. Event availability is confirmed with your proposal.</span></div>
+      <div class="ctas"><a class="btn" href="https://thepicniccollective.hbportal.co/schedule/66673cf26bf84d002bbb2e10" target="_blank" rel="noopener">Book a free consultation</a><a class="btn line" href="mailto:events@thepicniccollective.com?subject=Holiday%20party%20inquiry&amp;body=Event%20date%3A%0ALocation%3A%0AGuest%20count%3A%0ABudget%20range%3A%0AIdeas%3A">Email a party inquiry</a></div>
+      <p class="booking-contact"><a href="tel:+19492347102">Call 949-234-7102</a> · <a href="sms:+19492347102">Text us</a></p>
+      <p class="booking-price">A starting point: gingerbread decorating $79 per guest (10+ guests); cocktail styling $159 per table. These are individual services, not complete party prices. Service, tax, minimums and delivery may apply.</p>
+      <div class="ctas booking-explore">
       <a class="btn" href="#planner">Build your holiday party</a>
-      <a class="btn ghost" href="#call">Book a free call</a>
+      <a class="btn ghost" href="#collections">Explore services &amp; prices</a>
     </div>
     <div class="note">Now booking November and December · Orange County · Los Angeles · San Diego</div>
   </div>
@@ -460,13 +464,13 @@ footer a{color:var(--brass-lt);text-decoration:none}
   <div class="wrap cb">
     <div class="cbface" id="cb-face" aria-hidden="true"><span>LR</span></div>
     <div class="cbtext">
-      <div class="eyebrow">Free 15-minute call</div>
+      <div class="eyebrow">Free 30-minute call</div>
       <h2>Rather just talk it through?</h2>
       <p>Book a free call with <b>Lauren Rivard</b>, our founder and head planner, or someone on our event coordination team. Bring your date and headcount. We'll bring ideas and real numbers.</p>
     </div>
     <div class="cbacts">
-      <a class="btn" data-call="lauren" href="#book">Book a free call with Lauren</a>
-      <a class="btn line" data-call="team" href="#book">Book with the coordination team</a>
+      <a class="btn" data-call="lauren" href="#book">Book a free consultation</a>
+      <a class="btn line" data-call="team" href="#book">Email a party inquiry</a>
       <a class="cbtel" href="tel:+19492347102">or call or text 949-234-7102</a>
     </div>
   </div>
@@ -748,7 +752,7 @@ footer a{color:var(--brass-lt);text-decoration:none}
     <div>
       <div class="eyebrow">Talk to a planner</div>
       <h2 style="margin-top:12px">Prime December dates book by early November.</h2>
-      <p class="lead" style="color:#E3DAC6;margin-top:16px">Book a free call with Lauren Rivard, our founder and head planner, or our event coordination team of planners, event stylists and catering leads. Or reach us directly.</p>
+      <p class="lead" style="color:#E3DAC6;margin-top:16px">Book a free consultation with Lauren Rivard, our founder and head planner, or our event coordination team of planners, event stylists and catering leads. Or reach us directly.</p>
       <div class="contact">
         <div class="row"><span class="val">events@thepicniccollective.com</span><button class="copy" type="button" data-copy="events@thepicniccollective.com">Copy</button></div>
         <div class="row"><span class="val">949-234-7102</span><button class="copy" type="button" data-copy="949-234-7102">Copy</button></div>
@@ -776,7 +780,7 @@ footer a{color:var(--brass-lt);text-decoration:none}
 (function(){
   /* ===== Settings Nick can change ===== */
   var CALENDLY_LAUREN = "https://thepicniccollective.hbportal.co/schedule/66673cf26bf84d002bbb2e10";   // e.g. "https://calendly.com/your-link/holiday-party-review"
-  var CALENDLY_TEAM   = "https://thepicniccollective.hbportal.co/schedule/66673cf26bf84d002bbb2e10";   // optional second link for the planning team
+  var CALENDLY_TEAM = "mailto:events@thepicniccollective.com?subject=Holiday%20party%20inquiry";   // optional second link for the planning team
   var LAUREN_PHOTO    = "";   // e.g. "img/lauren.jpg" once a headshot is added
 
   var $=function(id){return document.getElementById(id)};
@@ -1000,9 +1004,9 @@ footer a{color:var(--brass-lt);text-decoration:none}
     var h='<div class="who">'+face+'<div><div class="role">Founder · Head planner</div><h4>Meet Lauren Rivard</h4></div></div>';
     h+='<p>Lauren founded The Picnic Collective in 2019 and heads our design and floral program. Book a free call with her or with our event coordination team of planners, event stylists and catering leads.</p>';
     var a=callHref('lauren',summary),b=callHref('team',summary);
-    h+='<a class="btn" href="'+a+'"'+callAttrs(a)+'>Book a free call with Lauren</a>';
-    h+='<a class="btn ghost" href="'+b+'"'+callAttrs(b)+'>Book with the coordination team</a>';
-    h+='<div class="alt">Free, 15 minutes, no obligation. Or call or text <a href="tel:+19492347102" style="color:var(--brass-lt)">949-234-7102</a>.</div>';
+    h+='<a class="btn" href="'+a+'"'+callAttrs(a)+'>Book a free consultation</a>';
+    h+='<a class="btn ghost" href="'+b+'"'+callAttrs(b)+'>Email a party inquiry</a>';
+    h+='<div class="alt">Free, 30 minutes, no obligation. Or call or text <a href="tel:+19492347102" style="color:var(--brass-lt)">949-234-7102</a>.</div>';
     return h;
   }
   function summaryText(r){
@@ -1085,6 +1089,7 @@ footer a{color:var(--brass-lt);text-decoration:none}
   $('w-body').addEventListener('change',function(e){var t=e.target;if(t.classList&&t.classList.contains('qn')){setX(t.getAttribute('data-x'),parseInt(t.value,10)||0);render(true);}});
   function go(d){st.i=Math.max(0,Math.min(STEPS.length-1,st.i+d));save();render();var t=$('planner');if(t&&t.getBoundingClientRect().top<0)t.scrollIntoView({block:'start'});}
   $('w-next').addEventListener('click',function(){go(1)});
+  var preview=document.createElement('button');preview.type='button';preview.className='copy';preview.id='preview-estimate';preview.textContent='Preview estimate now';$('w-next').parentNode.appendChild(preview);preview.addEventListener('click',function(){st.i=STEPS.length-1;save();render();$('w-body').scrollIntoView({block:'start'});});
   $('w-back').addEventListener('click',function(){go(-1)});
   var cf=$('cb-face');if(cf&&LAUREN_PHOTO)cf.innerHTML='<img src="'+LAUREN_PHOTO+'" alt="Lauren Rivard">';
   document.querySelectorAll('[data-story]').forEach(function(btn){btn.addEventListener('click',function(e){
@@ -1105,8 +1110,7 @@ footer a{color:var(--brass-lt);text-decoration:none}
 </script>
 
 <script src="../tracking.js?v=ads-consult-1"></script>
-
-<script id="tpc-company-embedded-navigation-v1">
+<link rel="stylesheet" href="../booking-path.css"><script id="tpc-company-embedded-navigation-v1">
 /* Navigation-only fix: native fragment links in the full-height Squarespace embed. */
 (function () {
   'use strict';
@@ -1140,4 +1144,4 @@ footer a{color:var(--brass-lt);text-decoration:none}
   window.addEventListener('pageshow', function () { reveal(location.hash); });
 })();
 </script>
-</body></html>
+<script src="../booking-path.js"></script></body></html>
