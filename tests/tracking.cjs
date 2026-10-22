@@ -81,11 +81,11 @@ function setup(query = '', saved, blocked = false) {
   url = new URL(dom.window.document.querySelector('#book').href);
   assert.equal(url.searchParams.get('utm_source'), 'partner'); assert.equal(url.searchParams.get('utm_medium'), 'referral'); dom.window.close();
   // Signed email click key tags destination as email; unsigned does not.
-  for (const [c, expect] of [['1-42-abcdefghij','email'], ['', null]]) {
+  for (const [c, expect] of [['1-42-abcdefghij','email'], ['', 'sms']]) {
     let redirected; dom = setup('');
     const html = readFileSync(resolve(root,'go/index.html'),'utf8');
     const inline = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(-1)[1];
-    vm.runInNewContext(inline, {URL, URLSearchParams, location:{href:'https://holiday.thepicniccollective.com/go/', search:'?d=book&c='+c, replace(v){redirected=v;}}, navigator:{sendBeacon(){}}, setTimeout(fn){fn();}, window:{TPCHolidayTracking:{url:x=>x, consultClick:fn=>fn()}}});
+    vm.runInNewContext(inline, {URL, URLSearchParams, location:{href:'https://holiday.thepicniccollective.com/go/', search:'?d=book&c='+c, replace(v){redirected=v;}}, navigator:{sendBeacon(){}}, setTimeout(fn){fn();}, localStorage:{setItem(){}}, window:{TPCHolidayTracking:{url:x=>x+'?utm_source=sms&src=sms', consultClick:fn=>fn()}}});
     assert.equal(new URL(redirected).searchParams.get('utm_source'), expect); dom.window.close();
   }
   const pages = ['index.html','gift/index.html','go/index.html','holiday-at-home/index.html','holiday-parties/index.html','holiday-parties/trends.html','socal-holiday-party-planning/index.html'];

@@ -26,7 +26,8 @@
     var dest = window.TPCHolidayTracking ? window.TPCHolidayTracking.url(D[d]) : D[d];
     // Signed per-recipient key = holiday email click; tag for HoneyBook attribution unless already tagged.
     try{ if(/^\d+-\d+-[A-Za-z0-9_-]{10}$/.test(c)){ var u=new URL(dest);
-      if(!u.searchParams.has('utm_source')){ u.searchParams.set('utm_source','email'); u.searchParams.set('utm_medium','email'); u.searchParams.set('utm_campaign','holiday2026'); }
+      u.searchParams.set('src','email'); u.searchParams.set('utm_source','email'); u.searchParams.set('utm_medium','email'); u.searchParams.set('utm_campaign','holiday2026');
+      try{ localStorage.setItem('tpc_holiday_attribution', JSON.stringify({src:'email',utm_source:'email',utm_medium:'email',utm_campaign:'holiday2026'})); }catch(e){}
       dest=u.href; } }catch(e){}
     location.replace(dest);
   }
