@@ -12,7 +12,7 @@
 </head>
 <body style="font-family:Georgia,serif;text-align:center;padding:60px 20px;color:#333">
 <p>One moment…</p>
-<script src="../tracking.js?v=ads-consult-1"></script>
+<script src="../tracking.js?v=attrib-1"></script>
 <script>
 // Email link-click counter. Fixed destinations only (no open redirect). Count is fire-and-forget; redirect never waits on it.
 (function(){
@@ -23,7 +23,12 @@
   try{ if(/^\d+-\d+-[A-Za-z0-9_-]{10}$/.test(c)) navigator.sendBeacon(EP,new URLSearchParams({k:'click',ck:c,d:d})); }catch(e){}
   function redirect(){
     if(d === 'book' && window.TPCHolidayMeta) window.TPCHolidayMeta.schedulerRedirect();
-    location.replace(window.TPCHolidayTracking ? window.TPCHolidayTracking.url(D[d]) : D[d]);
+    var dest = window.TPCHolidayTracking ? window.TPCHolidayTracking.url(D[d]) : D[d];
+    // Signed per-recipient key = holiday email click; tag for HoneyBook attribution unless already tagged.
+    try{ if(/^\d+-\d+-[A-Za-z0-9_-]{10}$/.test(c)){ var u=new URL(dest);
+      if(!u.searchParams.has('utm_source')){ u.searchParams.set('utm_source','email'); u.searchParams.set('utm_medium','email'); u.searchParams.set('utm_campaign','holiday2026'); }
+      dest=u.href; } }catch(e){}
+    location.replace(dest);
   }
   if(d === 'book' && window.TPCHolidayTracking) window.TPCHolidayTracking.consultClick(redirect);
   else setTimeout(redirect,150);

@@ -53,7 +53,7 @@ function setup(query = '', saved, blocked = false) {
   dom = setup('', {src:'email', utm_campaign:'return-visit'});
   assert.equal(new URL(dom.window.document.querySelector('#book').href).searchParams.get('src'), 'email'); dom.window.close();
   dom = setup('?src=new', {src:'old', utm_campaign:'stale'});
-  assert.equal(new URL(dom.window.document.querySelector('#book').href).searchParams.has('utm_campaign'), false); dom.window.close();
+  assert.equal(new URL(dom.window.document.querySelector('#book').href).searchParams.get('utm_campaign'), 'holiday2026'); dom.window.close(); // stale saved campaign not reused
   dom = setup('?src=email%20%26%20friends', null, true);
   assert.equal(new URL(dom.window.document.querySelector('#book').href).searchParams.get('src'), 'email & friends'); dom.window.close();
   dom = setup('', null, true);
@@ -65,7 +65,7 @@ function setup(query = '', saved, blocked = false) {
     let redirected;
     const html = readFileSync(resolve(root,'go/index.html'),'utf8');
     const inline = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(-1)[1];
-    vm.runInNewContext(inline, {URLSearchParams, location:{search:'?d='+encodeURIComponent(destination), replace(value){redirected=value;}}, navigator:{sendBeacon(){throw Error('unexpected beacon');}}, setTimeout(fn){fn();}, window:dom.window});
+    vm.runInNewContext(inline, {URL, URLSearchParams, location:{href:'https://holiday.thepicniccollective.com/go/', search:'?d='+encodeURIComponent(destination), replace(value){redirected=value;}}, navigator:{sendBeacon(){throw Error('unexpected beacon');}}, setTimeout(fn){fn();}, window:dom.window});
     const result = new URL(redirected);
     assert.equal(result.searchParams.get('src'), 'newsletter');
     assert.equal(result.searchParams.get('utm_campaign'), 'holiday2026');
@@ -73,6 +73,21 @@ function setup(query = '', saved, blocked = false) {
     if (destination === 'https://evil.example') assert.equal(result.pathname, '/holiday-at-home/');
   }
   dom.window.close();
+  // src-only links (holiday SMS) gain utm_* for HoneyBook attribution; explicit utm wins.
+  dom = setup('?src=sms');
+  url = new URL(dom.window.document.querySelector('#book').href);
+  assert.equal(url.searchParams.get('utm_source'), 'sms'); assert.equal(url.searchParams.get('utm_medium'), 'sms'); assert.equal(url.searchParams.get('utm_campaign'), 'holiday2026'); dom.window.close();
+  dom = setup('?src=sms&utm_source=partner&utm_medium=referral');
+  url = new URL(dom.window.document.querySelector('#book').href);
+  assert.equal(url.searchParams.get('utm_source'), 'partner'); assert.equal(url.searchParams.get('utm_medium'), 'referral'); dom.window.close();
+  // Signed email click key tags destination as email; unsigned does not.
+  for (const [c, expect] of [['1-42-abcdefghij','email'], ['', null]]) {
+    let redirected; dom = setup('');
+    const html = readFileSync(resolve(root,'go/index.html'),'utf8');
+    const inline = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(-1)[1];
+    vm.runInNewContext(inline, {URL, URLSearchParams, location:{href:'https://holiday.thepicniccollective.com/go/', search:'?d=book&c='+c, replace(v){redirected=v;}}, navigator:{sendBeacon(){}}, setTimeout(fn){fn();}, window:{TPCHolidayTracking:{url:x=>x, consultClick:fn=>fn()}}});
+    assert.equal(new URL(redirected).searchParams.get('utm_source'), expect); dom.window.close();
+  }
   const pages = ['index.html','gift/index.html','go/index.html','holiday-at-home/index.html','holiday-parties/index.html','holiday-parties/trends.html','socal-holiday-party-planning/index.html'];
   for (const page of pages) {
     const html = readFileSync(resolve(root,page), 'utf8');

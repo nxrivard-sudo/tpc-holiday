@@ -12,6 +12,14 @@
     var value = incoming.get(key);
     if (value) campaign[key] = value.slice(0, 200);
   });
+  // HoneyBook attribution reads utm_* only; translate legacy ?src= (e.g. holiday SMS) when no utm_source.
+  var SRC_MEDIUM = { sms: 'sms', text: 'sms', email: 'email', newsletter: 'email', instagram: 'social', facebook: 'social', meta: 'paid_social', google: 'cpc' };
+  if (campaign.src && !campaign.utm_source) {
+    var srcKey = campaign.src.toLowerCase();
+    campaign.utm_source = srcKey;
+    if (!campaign.utm_medium) campaign.utm_medium = SRC_MEDIUM[srcKey] || 'referral';
+    if (!campaign.utm_campaign) campaign.utm_campaign = 'holiday2026';
+  }
   var fresh = Object.keys(campaign).length > 0;
   try {
     if (!fresh) {
